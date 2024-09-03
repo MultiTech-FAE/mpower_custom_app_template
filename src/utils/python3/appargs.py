@@ -12,7 +12,7 @@
 import json
 import logging
 import argparse
-import core.applogger
+import applogger
 
 from types import SimpleNamespace
 

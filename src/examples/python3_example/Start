@@ -1,5 +1,7 @@
 #!/bin/bash
 #
+# Start - python3_example
+#
 # This Start script is used by the app-manager program to start and stop 
 # applications. app-manager invokes this script with the 'start' option on boot
 # and when the app-manager start command is run. app-manager invokes this 
@@ -31,7 +33,7 @@
 #Name
 # Application name.
 #
-NAME="example_application"
+NAME="python3_example"
 
 #
 #DAEMON
@@ -44,7 +46,7 @@ NAME="example_application"
 #  Compiled Executable (C, C++, etc):
 #   DAEMON="${APP_DIR}/example_application"
 #
-DAEMON="${APP_DIR}/example_application"
+DAEMON="${APP_DIR}/${NAME}.py"
 
 #
 #DAEMON_ARGS
