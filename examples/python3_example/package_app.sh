@@ -6,6 +6,9 @@
 
 set -x
 
+# Application name.
+APP_NAME="python3_example"
+
 # Current working directory.
 START_DIR=$(pwd)
 
@@ -45,15 +48,6 @@ ${SRC_DIR}/manifest.json \
 ${SRC_DIR}/Start \
 "
 
-# Confirm required command line argument.
-if [ $# -eq 0 ]
-  then
-    set +x
-    echo "No arguments supplied"
-    echo "Requires file name prefix that will be used to create archive ending in '.tar.gz'"
-    exit 1
-fi
-
 # Remove old build and create new build directory.
 rm -rf "${BUILD_DIR}/"
 mkdir -p "${BUILD_DIR}/config/" || exit 1
@@ -64,8 +58,8 @@ cp ${SRC_CONFIG_FILES} "${BUILD_DIR}/config/" || exit 1
 cp ${MPOWER_APP_FILES} "${BUILD_DIR}/"        || exit 1
 
 # Create the mPower custom application archive.
-cd ${BUILD_DIR}       || exit 1
-tar -czvf $1.tar.gz * || exit 1
-cd ${START_DIR}       || exit 1
+cd ${BUILD_DIR}                  || exit 1
+tar -czvf "${APP_NAME}.tar.gz" * || exit 1
+cd ${START_DIR}                  || exit 1
 
-echo "Done. Packaged mPower custom application is in ${BUILD_DIR}/${1}.tar.gz"
+echo "Done. Packaged mPower custom application is in ${BUILD_DIR}/${APP_NAME}.tar.gz"
