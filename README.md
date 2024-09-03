@@ -1,7 +1,14 @@
 # mpower_custom_app_template
 Minimal template for use as a base to create custom mPower custom applications.
 
+## Folders
+
+./src - Commented mPower custom application specific files and folders.
+./utils - Helper code performs common mPower custom application operations.
+./examples - Full mPower custom application examples based on src and utils.
+
 ## Table of available scripting languages by mPower version
+
 | mPower Version | Language | Version |
 | -------------- | -------- | ------- |
 | 5.3.3	| nodejs | 0.10.48-r2.7.0 |
