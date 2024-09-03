@@ -1,0 +1,167 @@
+#!/bin/bash
+#
+# This Start script is used by the app-manager program to start and stop 
+# applications. app-manager invokes this script with the 'start' option on boot
+# and when the app-manager start command is run. app-manager invokes this 
+# script with the 'stop' option on shutdown and when the app-manager stop 
+# command is run.
+#
+# app-manager requires this script to accept the following command line
+# arguments:
+#
+#   start - start the application process(es)
+#   stop  - stop the application process(es)
+#   restart - restart the application process(es)
+#   reload - reload the application configuration (new config downloaded)
+#
+# MultiTech Provided Environment Variables:
+#    APP_DIR - installation directory of the application.
+#    CONFIG_DIR - Directory containing the configuration file.
+#
+# This script is a fully cusomizable template that can be used to initialize 
+# the environment for executing the application and starting all processes.  
+# This script is the supported framework to start and stop an application.
+
+
+################################
+# Variables - Edit to suit.
+################################
+
+#
+#Name
+# Application name.
+#
+NAME="example_application"
+
+#
+#DAEMON
+# Fully qualified path to application executable.
+#
+# Examples:
+#  Python3 - execute interpreter directly:
+#   DAEMON="python3 ${APP_DIR}/example_application.py"
+#
+#  Compiled Executable (C, C++, etc):
+#   DAEMON="${APP_DIR}/example_application"
+#
+DAEMON="${APP_DIR}/example_application"
+
+#
+#DAEMON_ARGS
+# Arguments supplied to the executable. Configuration example provided.
+#
+DAEMON_ARGS="--cfgfile ${CONFIG_DIR}/example.cfg.json"
+
+
+################################
+# Variables - Edit if necessary.
+################################
+
+#START_STOP_DAEMON
+# mPower software responsible for starting/stopping the application.
+#
+START_STOP_DAEMON="/usr/sbin/start-stop-daemon"
+
+#PID_FILE
+# File is created while application is running. Contains application PID.
+PID_FILE="/var/run/$NAME.pid"
+
+#RUN_DIR
+# Application will run in this directory.
+#
+RUN_DIR=$APP_DIR
+
+
+################################
+# Functions
+################################
+
+# Set custom environment variables for the application execution environment.
+function SetEnv {
+    echo "SetEnv"
+}
+
+# This function can be used to chmod files and implement any security initialization
+function CreateAccess {
+    echo "CreateAccess:"
+}
+
+# Intended to be a hook allowing the application to be executed as a non-root user. 
+function ChangeUser {
+    echo "ChangeUser:"
+}
+
+# The nuts and bolts of starting the application process.
+function ExecuteStart {
+    echo "ExecuteStart:"
+
+    $START_STOP_DAEMON --start \
+                      --background \
+                      --pidfile "$PID_FILE" \
+                      --make-pidfile \
+                      --chdir "$RUN_DIR" \
+                      --startas "$DAEMON" \
+                      -- "$DAEMON_ARGS"
+}
+
+# Start the application running process(es)
+function Start {
+    SetEnv
+    CreateAccess
+    ChangeUser
+    ExecuteStart
+}
+
+# Stop the application running process(es)
+function Stop {
+    echo "Stop:"
+    $START_STOP_DAEMON --stop -p "$PID_FILE" --retry 60
+}
+
+# Effectively stop and start the application again.
+function Restart {
+    echo "Restart:"	
+    Stop
+    sleep 1
+    Start
+}
+
+# Notify the application process that new config files are available
+function Reload {
+    echo "Reload:"
+    # Restart not needed for this app
+}
+
+#Gather options from command line
+# Reset in case getopts has been used previously in the shell.
+OPTIND=1
+
+case "$1" in
+    # start is invoked by app-manager after install, on boot, and
+    # during config install
+    start)
+        echo -n "Starting $NAME: "
+        Start
+        ;;
+    # stop is invoked by app-manager before shutdown, and during config install
+    stop)
+        echo -n "Stopping $NAME: "
+        Stop
+        ;;
+    # restart is invoked by app-manager when the app is explicitly restarted
+    restart)
+        echo -n "Restarting $NAME: "
+        Restart
+        ;;
+    # reload is invoked by app-manager after a new config has been installed
+    reload)
+        echo -n "Restarting $NAME: "
+        Reload
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|reload}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
