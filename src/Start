@@ -31,7 +31,7 @@
 #Name
 # Application name.
 #
-NAME="example_application"
+NAME="example
 
 #
 #DAEMON
@@ -39,16 +39,16 @@ NAME="example_application"
 #
 # Examples:
 #  Python3 - execute interpreter directly:
-#   DAEMON="python3 ${APP_DIR}/example_application.py"
+#   DAEMON="python3 ${APP_DIR}/example.py"
 #
 #  Compiled Executable (C, C++, etc):
-#   DAEMON="${APP_DIR}/example_application"
+#   DAEMON="${APP_DIR}/example"
 #
-DAEMON="${APP_DIR}/example_application"
+DAEMON="${APP_DIR}/${NAME}"
 
 #
 #DAEMON_ARGS
-# Arguments supplied to the executable. Configuration example provided.
+# Arguments supplied to the daemon.
 #
 DAEMON_ARGS="--cfgfile ${CONFIG_DIR}/example.cfg.json"
 

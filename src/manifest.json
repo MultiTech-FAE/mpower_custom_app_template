@@ -1,7 +1,7 @@
 {
-  "AppName": "sample-test" ,
-  "AppVersion": "2.0" ,
-  "AppDescription": "testing",
+  "AppName": "example" ,
+  "AppVersion": "0.0.1" ,
+  "AppDescription": "Example mPower Application",
   "AppVersionNotes":"First Version",
   "SDCard": false
 }

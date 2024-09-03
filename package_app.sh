@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# Package example python3 application into a tar.gz file that will be
-# installed as an application.
+# Package mPower custom application into an archive that is ready to 
+# upload to device and install.
 #
 
 set -x
@@ -18,15 +18,14 @@ BUILD_DIR="${SRC_DIR}/build"
 # Source configuration directory
 SRC_CONFIG_DIR="${SRC_DIR}/config"
 
-# Application source files.
+# Application source files. Separated for clarity.
 SRC_FILES="\
-${SRC_DIR}/applogger.py \
 ${SRC_DIR}/example.py \
 "
 
 #
 #SRC_CONFIG_FILES
-# Application source configuration files.
+# Application source configuration files. Separated for clarity.
 #
 SRC_CONFIG_FILES="\
     ${SRC_DIR}/example.cfg.json \
