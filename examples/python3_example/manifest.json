@@ -3,5 +3,6 @@
   "AppVersion": "0.0.1" ,
   "AppDescription": "Python3 mPower custom application example",
   "AppVersionNotes":"First release.",
-  "SDCard": false
+  "SDCard": false,
+  "PersistentStorage": true
 }

@@ -7,7 +7,7 @@
 set -x
 
 # Application name.
-APP_NAME="python3_example"
+APP_NAME="example"
 
 # Current working directory.
 START_DIR=$(pwd)
@@ -65,8 +65,11 @@ cp ${MPOWER_APP_FILES}          "${BUILD_DIR}/"             || exit 1
 cp ${MPOWER_PROVISIONING_FILES} "${BUILD_DIR}/provisioning" || exit 1
 
 # Create the mPower custom application archive.
+# Note: If uploading app to DeviceHQ (https://www.devicehq.com) the 
+#       archive file's executable bits must be set.
 cd ${BUILD_DIR}                  || exit 1
 tar -czvf "${APP_NAME}.tar.gz" * || exit 1
+chmod 755 "${APP_NAME}.tar.gz"   || exit 1
 cd ${START_DIR}                  || exit 1
 
 echo "Done. Packaged mPower custom application is in ${BUILD_DIR}/${APP_NAME}.tar.gz"
