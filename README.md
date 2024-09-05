@@ -5,7 +5,9 @@ Minimal template for use as a base to create custom mPower custom applications.
 ## Folders
 
 ./src - Commented mPower custom application specific files and folders.
+
 ./utils - Helper code performs common mPower custom application operations.
+
 ./examples - Full mPower custom application examples based on src and utils.
 
 ## Table of available scripting languages by mPower version

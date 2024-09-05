@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
     # Write to logs.
     logger.info(f'Device Serial Number: {serialno}')
-    
+
     for key,value in args.__dict__.items():
         logger.info(f'Argument "{key}" = "{value}"')
 

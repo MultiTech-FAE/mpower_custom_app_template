@@ -25,7 +25,6 @@
 
 set -x
 
-
 ########################################################################
 # Build Variables - Edit as required.
 ########################################################################
@@ -34,7 +33,7 @@ set -x
 #APP_NAME
 # Application name. Used to name the packaged tar.gz file.
 #
-APP_NAME="example"
+APP_NAME="Python3Example"
 
 #
 #START_DIR
