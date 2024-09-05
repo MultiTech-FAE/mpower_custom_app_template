@@ -14,72 +14,29 @@
 #   restart - restart the application process(es)
 #   reload - reload the application configuration (new config downloaded)
 #
-# MultiTech Provided Environment Variables:
-#    APP_DIR - installation directory of the application.
-#    CONFIG_DIR - Directory containing the configuration file.
 #
 # This script is a fully cusomizable template that can be used to initialize 
 # the environment for executing the application and starting all processes.  
 # This script is the supported framework to start and stop an application.
+#
+# MultiTech Provided environment variables:
+#  APP_DIR 
+#  APP_ID
+#  CONFIG_DIR
+#
 
+NAME="Python3ExampleMinimal"
 
-################################
-# Variables - Edit to suit.
-################################
+DAEMON="/usr/bin/python3 ${APP_DIR}/python3_example_minimal.py"
+DAEMON_ARGS=""
 
-#
-#Name
-# Application name.
-#
-NAME="Python3Example"
+RUN_DIR=$APP_DIR
 
-#
-#DAEMON
-# Fully qualified path to application executable.
-#
-# Examples:
-#  Python3 - execute interpreter directly:
-#   DAEMON="python3 ${APP_DIR}/example.py"
-#
-#  Compiled Executable (C, C++, etc):
-#   DAEMON="${APP_DIR}/example"
-#
-DAEMON="python3 ${APP_DIR}/python3_example.py"
-logger "[${NAME}] DAEMON = ${DAEMON}"
-
-#
-#DAEMON_ARGS
-# Arguments supplied to the daemon.
-#
-DAEMON_ARGS="--cfgfile ${CONFIG_DIR}/example.cfg.json"
-logger "[${NAME}] DAEMON_ARGS = ${DAEMON_ARGS}"
-
-
-################################
-# Variables - Edit if necessary.
-################################
-
-#START_STOP_DAEMON
-# mPower software responsible for starting/stopping the application.
-#
 START_STOP_DAEMON="/usr/sbin/start-stop-daemon"
 
-#PID_FILE
-# File is created while application is running. Contains application PID.
 PID_FILE="/var/run/$NAME.pid"
 
-#RUN_DIR
-# Application will run in this directory.
-#
-RUN_DIR=$APP_DIR
-logger "[${NAME}] RUN_DIR = ${RUN_DIR}"
-
-
-################################
-# Functions
-################################
-
-# Set custom environment variables for the application execution environment.
+# Set custom environment variables for the application execution
 function SetEnv {
     echo "SetEnv"
 }

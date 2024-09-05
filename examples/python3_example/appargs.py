@@ -41,7 +41,6 @@ DEFAULT_DESCRIPTION = (
 #
 REQUIRED_CONFIGURATION_FILE_ARGUMENTS = []
 
-
 class AppArgs():
     """Command line argument parser with examples of common arguments."""
 
@@ -50,19 +49,19 @@ class AppArgs():
 
         self.parser.add_argument (
             '--cfgfile',
-            required = False,
+            required = True,
             dest = 'cfgfile',
             help='Name of JSON formatted configuration file. All other command line arguments are ignored.',
             type = str
         )
 
-        self.parser.add_argument (
-            '--cfgjson',
-            required = False,
-            dest = 'cfgjson',
-            help='Use supplied JSON string as the configuration. All other command line arguments are ignored',
-            type = str
-        )
+#        self.parser.add_argument (
+#            '--cfgjson',
+#            required = False,
+#            dest = 'cfgjson',
+#            help='Use supplied JSON string as the configuration. All other command line arguments are ignored',
+#            type = str
+#        )
 
 # Example of a JSON formatted array of arguments.
 #  Change `--json_array` to desired command line argument. Change `json_array` to arg object. 
@@ -130,7 +129,7 @@ class AppArgs():
             logger.info(f'Configuration file loaded.')
             return jsonobj
 
-    def self.parse_json_configuration_str(self, jsonstr):
+    def parse_json_configuration_str(self, jsonstr):
         logger.info(f'Parsing JSON configuration string "{jsonstr}"...')
         jsonobj = json.loads (
             jsonstr,
@@ -148,9 +147,9 @@ class AppArgs():
     def parse_args(self):
         argobj = self.parser.parse_args()
 
-        if argobj.cfgfile:
+        if 'cfgfile' in argobj and argobj.cfgfile:
             argobj = self.load_configuration_file(argobj.cfgfile)
-        elif argobj.cfgjson:
+        elif 'cfgjson' in argobj and argobj.cfgjson:
             argobj = self.parse_json_configuration_str(argobj.cfgjson)
 
         return argobj

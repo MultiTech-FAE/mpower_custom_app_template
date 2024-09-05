@@ -39,9 +39,10 @@ if __name__ == '__main__':
         serialno = '0'
 
     # Write to logs.
-    logger.info(f'Device Serial Number: {serialno}'
-    for key,val in args:
-        logger.info(f'Argument {key} = {value}'
+    logger.info(f'Device Serial Number: {serialno}')
+    
+    for key,value in args.__dict__.items():
+        logger.info(f'Argument "{key}" = "{value}"')
 
     #End.
     logger.info("python3 example application end.")

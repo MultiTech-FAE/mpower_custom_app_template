@@ -1,8 +1,7 @@
 {
-  "AppName": "python3_example" ,
-  "AppVersion": "0.0.1" ,
+  "AppName": "Python3Example",
+  "AppVersion": "1.0",
   "AppDescription": "Python3 mPower custom application example",
   "AppVersionNotes":"First release.",
-  "SDCard": false,
-  "PersistentStorage": true
+  "SDCard": false
 }
