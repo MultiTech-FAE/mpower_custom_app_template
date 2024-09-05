@@ -17,6 +17,7 @@ logger = applogger.get_logger()
 from appargs import AppArgs
 from mpower_api import get_device_serial_number
 
+
 ########################################################################
 # Main
 ########################################################################

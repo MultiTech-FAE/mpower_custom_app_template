@@ -1,30 +1,33 @@
 #!/bin/bash
 #
-# Create build directory, copy files, and package mPower custom 
-# application into an archive that is ready to upload to device and
-# install.
+# package_app.sh
 #
-# Instructions:
-#  1. Populate the SRC_FILES variable with the mPower custom application
-#     source and/or executable file(s). Required files are already 
-#     populated in the  MPOWER_APP_FILES variable and should not be 
-#     included in SRC_FILES.
+#  Create build directory, copy files, and package mPower custom 
+#  application into an archive that is ready to upload to device and
+#  install.
 #
-#  2. If the mPower custom application uses configuration files that 
-#     must persist across mPower firmware updates: Populate the
-#     SRC_CONFIG_FILES variable and uncomment lines in the 
-#     "Build Config" section.
+#  Instructions:
+#   1. Populate the SRC_FILES variable with the mPower custom 
+#      application source and/or executable file(s). Required files are
+#      already populated in the  MPOWER_APP_FILES variable and should 
+#      not be included in SRC_FILES.
 #
-#  3. If the mPower custom application requires provisioning and 
-#     installation of additional packages: Populate the 
-#     MPOWER_PROVISIONING_FILES variable and uncomment lines in the 
-#     "Build Provisioning" section.
+#   2. If the mPower custom application uses configuration files that 
+#      must persist across mPower firmware updates then populate the
+#      SRC_CONFIG_FILES variable and uncomment lines in the 
+#      "Build Config" section.
+#
+#   3. If the mPower custom application requires provisioning and 
+#      installation of additional packages then populate the 
+#      MPOWER_PROVISIONING_FILES variable and uncomment lines in the 
+#      "Build Provisioning" section.
 #
 
 set -x
 
+
 ########################################################################
-# Variables - Edit as required.
+# Build Variables - Edit as required.
 ########################################################################
 
 #
@@ -95,6 +98,7 @@ MPOWER_PROVISIONING_FILES="\
     ${SRC_DIR}/p_manifest.json \
 "
 
+
 ########################################################################
 # Build Functions
 ########################################################################
@@ -145,7 +149,7 @@ mkdir -p "${BUILD_DIR}"                 || exit 1
 # Build Source
 #  Copy source and mandatory mPower application files to build dir.
 #
-build_src()
+build_src
 
 #
 # Build Config
@@ -154,16 +158,16 @@ build_src()
 # Uncomment if application uses configuration files that must persist
 # across mPower firmware updates.
 #
-#build_config()
+#build_config
 
 #
 # Build Provisioning
 #  Copy optional provisioning files to build dir.
 #
-# Uncomment if application has provisioning dependencies that must be
-# installed.
+# Uncomment if application requires provisioning and installation of
+# additional packages.
 #
-#build_provisioning()
+#build_provisioning
 
 # Create the mPower custom application archive.
 cd ${BUILD_DIR}                  || exit 1
