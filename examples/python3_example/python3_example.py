@@ -50,4 +50,4 @@ if __name__ == '__main__':
         logger.info(f'Argument "{key}" = "{value}"')
 
     #End.
-    logger.info("python3 example application end.")
+        logger.info("python3 example application end.")

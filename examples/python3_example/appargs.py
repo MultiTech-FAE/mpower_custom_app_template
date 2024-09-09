@@ -52,7 +52,7 @@ class AppArgs():
             '--cfgfile',
             required = True,
             dest = 'cfgfile',
-            help='Name of JSON formatted configuration file. All other command line arguments are ignored.',
+            help='Name of JSON formatted configuration file. Command line option --logfile is honored. All other command line arguments are ignored.',
             type = str
         )
 
@@ -60,7 +60,7 @@ class AppArgs():
             '--logfile',
             required = True,
             dest = 'logfile',
-            help='Write to specified log file.',
+            help='Log to specified file.',
             type = str,
             default = os.devnull
         )

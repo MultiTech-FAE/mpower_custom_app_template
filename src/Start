@@ -91,7 +91,7 @@ DAEMON="${APP_DIR}/${NAME}"
 #
 # Uncomment to pass optional arguments to daemon when debugging.
 #
-#DAEMON_DEBUG_ARGS="--logfile ${APP}/debug_log.txt"
+#DAEMON_DEBUG_ARGS="--logfile ${APP_DIR}/debug_log.txt"
 
 #
 #DAEMON_ARGS

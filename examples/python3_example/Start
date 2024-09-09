@@ -51,13 +51,17 @@ DAEMON="python3 ${APP_DIR}/python3_example.py"
 #
 # Uncomment to pass optional arguments to daemon when debugging.
 #
-DAEMON_DEBUG_ARGS="--logfile ${APP}/debug_log.txt"
+DAEMON_DEBUG_ARGS="--logfile ${APP_DIR}/debug.log"
 
 #
 #DAEMON_ARGS
 # Arguments supplied to the daemon.
 #
-DAEMON_ARGS="--cfgfile ${CONFIG_DIR}/example.cfg.json"
+DAEMON_ARGS="--cfgfile ${CONFIG_DIR}/example.cfg.json ${DAEMON_DEBUG_ARGS}"
+
+logger "[${NAME}] DAEMON = ${DAEMON}"
+logger "[${NAME}] DAEMON_DEBUG_ARGS = ${DAEMON_DEBUG_ARGS}"
+logger "[${NAME}] DAEMON_ARGS = ${DAEMON_ARGS}"
 
 
 ################################
