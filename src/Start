@@ -21,7 +21,33 @@
 # This script is a fully cusomizable template that can be used to initialize 
 # the environment for executing the application and starting all processes.  
 # This script is the supported framework to start and stop an application.
+#
+# Debugging Tips:
+#  The `Start` file can be invoked manually from the command line using 
+#  the following:
+#
+#   `$ sudo APP_DIR=$(pwd) CONFIG_DIR=$(pwd)/config ./Start start`
+#
+#  Enable verbose output during bash processing of the `Start` script 
+#  using:
+#
+#   `set -x`
+#
+#  Log output from `Start` script to `/var/log/messages` by using the 
+#  `logger` command. Example:
+# 
+#   Line in Script:
+#    `logger "[${NAME}] DAEMON = ${DAEMON}"`
+#
+#   As written to in `/var/log/messages`:
+#    `-09T09:31:35.765713-05:00 mtcap3 root: [Python3Example] DAEMON = /var/config/app/Example/example.exe`
+#
 
+#
+# Debug: uncomment to enable verbose output during shell processing of 
+# the `Start` script.
+#
+#set -x
 
 ################################
 # Variables - Edit to suit.
@@ -69,7 +95,7 @@ PID_FILE="/var/run/$NAME.pid"
 #RUN_DIR
 # Application will run in this directory.
 #
-RUN_DIR=$APP_DIR
+RUN_DIR="${APP_DIR}"
 
 
 ################################
@@ -96,12 +122,12 @@ function ExecuteStart {
     echo "ExecuteStart:"
 
     $START_STOP_DAEMON --start \
-                      --background \
-                      --pidfile "$PID_FILE" \
-                      --make-pidfile \
-                      --chdir "$RUN_DIR" \
-                      --startas "$DAEMON" \
-                      -- "$DAEMON_ARGS"
+                       --background \
+                       --pidfile "${PID_FILE}" \
+                       --make-pidfile \
+                       --chdir "${RUN_DIR}" \
+                       --startas "${DAEMON}" \
+                       -- "${DAEMON_ARGS}"
 }
 
 # Start the application running process(es)
@@ -115,7 +141,7 @@ function Start {
 # Stop the application running process(es)
 function Stop {
     echo "Stop:"
-    $START_STOP_DAEMON --stop -p "$PID_FILE" --retry 60
+    $START_STOP_DAEMON --stop -p "${PID_FILE}" --retry 60
 }
 
 # Effectively stop and start the application again.

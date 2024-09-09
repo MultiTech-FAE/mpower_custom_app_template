@@ -54,6 +54,11 @@ logger "[${NAME}] DAEMON = ${DAEMON}"
 DAEMON_ARGS="--cfgfile ${CONFIG_DIR}/example.cfg.json"
 logger "[${NAME}] DAEMON_ARGS = ${DAEMON_ARGS}"
 
+#
+# DEBUG_LOG_FILE
+#  Debug Log File
+DEBUG_LOG_FILE="${APP}/debug.log"
+
 
 ################################
 # Variables - Edit if necessary.
@@ -100,11 +105,12 @@ function ExecuteStart {
 
     $START_STOP_DAEMON --start \
                        --background \
-                       --pidfile "$PID_FILE" \
+                       --output "${DEBUG_LOG_FILE}" \
+                       --pidfile "${PID_FILE}" \
                        --make-pidfile \
-                       --chdir "$RUN_DIR" \
-                       --startas "$DAEMON" \
-                       -- "$DAEMON_ARGS"
+                       --chdir "${RUN_DIR}" \
+                       --startas "${DAEMON}" \
+                       -- "${DAEMON_ARGS}"
 }
 
 # Start the application running process(es)

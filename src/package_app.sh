@@ -84,8 +84,8 @@ MPOWER_APP_FILES="\
 # Optional space delimited list of application configuration files.
 #
 SRC_CONFIG_FILES="\
-    ${SRC_DIR}/example.cfg.json \
-    ${SRC_DIR}/EXAMPLE_CFG_README.md \
+    ${SRC_CONFIG_DIR}/example.cfg.json \
+    ${SRC_CONFIG_DIR}/EXAMPLE_CFG_README.md \
 "
 
 
