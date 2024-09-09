@@ -5,6 +5,8 @@ OPKG_CMD_PREFIX_R="opkg remove --force-depends "
 MANIFEST="./provisioning/p_manifest.json"
 NAME="Install"
 
+PLAY_FREEBIRD="NO FREEBIRD ALLOWED"
+
 #
 # This function is called via the install argument.  It is invoked by the
 # app-manager process during the install of a custom app.  It reads the

@@ -45,19 +45,19 @@ NAME="Python3Example"
 #   DAEMON="${APP_DIR}/example"
 #
 DAEMON="python3 ${APP_DIR}/python3_example.py"
-logger "[${NAME}] DAEMON = ${DAEMON}"
+
+#
+#DAEMON_DEBUG_ARGS
+#
+# Uncomment to pass optional arguments to daemon when debugging.
+#
+DAEMON_DEBUG_ARGS="--logfile ${APP}/debug_log.txt"
 
 #
 #DAEMON_ARGS
 # Arguments supplied to the daemon.
 #
 DAEMON_ARGS="--cfgfile ${CONFIG_DIR}/example.cfg.json"
-logger "[${NAME}] DAEMON_ARGS = ${DAEMON_ARGS}"
-
-#
-# DEBUG_LOG_FILE
-#  Debug Log File
-DEBUG_LOG_FILE="${APP}/debug.log"
 
 
 ################################
@@ -77,7 +77,6 @@ PID_FILE="/var/run/$NAME.pid"
 # Application will run in this directory.
 #
 RUN_DIR=$APP_DIR
-logger "[${NAME}] RUN_DIR = ${RUN_DIR}"
 
 
 ################################
@@ -105,7 +104,6 @@ function ExecuteStart {
 
     $START_STOP_DAEMON --start \
                        --background \
-                       --output "${DEBUG_LOG_FILE}" \
                        --pidfile "${PID_FILE}" \
                        --make-pidfile \
                        --chdir "${RUN_DIR}" \

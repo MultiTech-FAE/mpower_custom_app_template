@@ -14,19 +14,7 @@ JSON formatted file contains the following members:
 | AppVersion        | String  | Version of the application. DeviceHQ uses this to distinguish between versions |
 | AppDescription    | String  | Description for your purposes |
 | AppVersionNotes   | String  | Any applicable notes for the particular version of the application displayed on DeviceHQ |
-| SDCard 	        | Boolean | Optional variable determines where to save app. If true, it saves to SD card. If false, saves in flash. |
-| PersistentStorage | Boolean | Optional variable. When set to true, application is stored and installed from the /var/persistent directory location. |
+| SDCard 	        | Boolean | Optional variable. Can not be used with PersistentStorage. Determines where app is installed and saved. A value of `true` uses external SD card. A value of `false` uses non-persistent internal NVRAM which may be overwritten during factory reset and firmware upgrades. |
+| PersistentStorage | Boolean | Optional variable. Can not be used with SDCard. Determines where app is installed and saved. A value of `true` uses persistent NVRAM that won't be overwritten by a factory default or firmware upgrade. A value of `false` uses non-persistent internal NVRAM which may be overwritten during factory reset and firmware upgrades. |
 
-Example `manifest.json` file:
-```
-{
-  "AppName": "example" ,
-  "AppVersion": "0.0.1" ,
-  "AppDescription": "custom application example",
-  "AppVersionNotes":"First release.",
-  "SDCard": false,
-  "PersistentStorage": true
-}
-```
-
-
+Three example manifest.json files are provided. To use, copy desired manifest file to application and rename to `manifest.json`.

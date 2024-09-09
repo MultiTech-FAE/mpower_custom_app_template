@@ -73,6 +73,17 @@ def init(handle = APPLOGGER_HANDLE_DEFAULT, max_level = APPLOGGER_DEFAULT_MAX_LE
 
     APPLOGGER_HANDLE = handle
 
+def use_log_file(fname):
+    '''Attempts to log to file in addition to syslog.'''
+    if APPLOGGER_HANDLE:
+        logger = logging.getLogger(APPLOGGER_HANDLE)
+        hndlr  = logging.FileHandler(fname)
+        fmtr   = logging.Formatter(APPLOGGER_FORMAT_STRING)
+
+        hndlr.setFormatter(fmtr)
+        logger.addHandler(hndlr)
+    else:
+        raise Exception("Application logger is not initialized. Use applogger.init() first.")        
 
 def get_logger():
     if APPLOGGER_HANDLE:

@@ -1,10 +1,13 @@
 #!/bin/bash
 #
-# This Start script is used by the app-manager program to start and stop 
-# applications. app-manager invokes this script with the 'start' option on boot
-# and when the app-manager start command is run. app-manager invokes this 
-# script with the 'stop' option on shutdown and when the app-manager stop 
-# command is run.
+# Start
+#
+# Script used by the app-manager program to start and stop applications. 
+#
+# This script is a fully cusomizable template that can be used to 
+# initialize the environment for executing the application and starting 
+# all processes. This script is part of the required mPower custom 
+# application framework to start and stop an application.
 #
 # app-manager requires this script to accept the following command line
 # arguments:
@@ -14,40 +17,51 @@
 #   restart - restart the application process(es)
 #   reload - reload the application configuration (new config downloaded)
 #
+#  Script is invoked with the 'start' option on boot and when the 
+#  `app-manager` 'start' command is run. Script is invoked with the 
+#  'stop' option on shutdown and when the `app-manager` 'stop' command
+#  is run.
+#
 # MultiTech Provided Environment Variables:
 #    APP_DIR - installation directory of the application.
 #    CONFIG_DIR - Directory containing the configuration file.
 #
-# This script is a fully cusomizable template that can be used to initialize 
-# the environment for executing the application and starting all processes.  
-# This script is the supported framework to start and stop an application.
-#
 # Debugging Tips:
-#  The `Start` file can be invoked manually from the command line using 
+#  - The `Start` file can be invoked manually from the command line using 
 #  the following:
 #
 #   `$ sudo APP_DIR=$(pwd) CONFIG_DIR=$(pwd)/config ./Start start`
 #
-#  Enable verbose output during bash processing of the `Start` script 
+#  - Enable verbose output during bash processing of the `Start` script 
 #  using:
 #
 #   `set -x`
 #
-#  Log output from `Start` script to `/var/log/messages` by using the 
-#  `logger` command. Example:
-# 
-#   Line in Script:
-#    `logger "[${NAME}] DAEMON = ${DAEMON}"`
+#  - Log output from `Start` script to `/var/log/messages` by using the 
+#  `logger` command.
 #
-#   As written to in `/var/log/messages`:
-#    `-09T09:31:35.765713-05:00 mtcap3 root: [Python3Example] DAEMON = /var/config/app/Example/example.exe`
+#   Logger Example:
+#    Line in Script:
+#     `logger "[${NAME}] DAEMON = ${DAEMON}"`
+#
+#    As appears in `/var/log/messages`:
+#     `-09T09:31:35.765713-05:00 mtcap3 root: [Example] DAEMON = /var/config/app/Example/example.exe`
+#
+#  - Write application to log to debug file on file system. 
+#     See commented 'DAEMON_DEBUG_ARGS' variable below for suggestion.
 #
 
+
+################################
+# Shell
+################################
+
 #
-# Debug: uncomment to enable verbose output during shell processing of 
+# DEBUG: uncomment to enable verbose output during shell processing of 
 # the `Start` script.
 #
 #set -x
+
 
 ################################
 # Variables - Edit to suit.
@@ -73,10 +87,17 @@ NAME="example"
 DAEMON="${APP_DIR}/${NAME}"
 
 #
+#DAEMON_DEBUG_ARGS
+#
+# Uncomment to pass optional arguments to daemon when debugging.
+#
+#DAEMON_DEBUG_ARGS="--logfile ${APP}/debug_log.txt"
+
+#
 #DAEMON_ARGS
 # Arguments supplied to the daemon.
 #
-DAEMON_ARGS="--cfgfile ${CONFIG_DIR}/example.cfg.json"
+DAEMON_ARGS="--cfgfile ${CONFIG_DIR}/example.cfg.json ${DAEMON_DEBUG_ARGS}"
 
 
 ################################

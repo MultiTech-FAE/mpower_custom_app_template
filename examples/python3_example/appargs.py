@@ -9,6 +9,7 @@
 # Imports
 ########################################################################
 
+import os
 import json
 import logging
 import argparse
@@ -53,6 +54,15 @@ class AppArgs():
             dest = 'cfgfile',
             help='Name of JSON formatted configuration file. All other command line arguments are ignored.',
             type = str
+        )
+
+        self.parser.add_argument (
+            '--logfile',
+            required = True,
+            dest = 'logfile',
+            help='Write to specified log file.',
+            type = str,
+            default = os.devnull
         )
 
 #        self.parser.add_argument (
@@ -145,11 +155,15 @@ class AppArgs():
         return jsonobj
 
     def parse_args(self):
-        argobj = self.parser.parse_args()
+        parseargs = self.parser.parse_args()
 
-        if 'cfgfile' in argobj and argobj.cfgfile:
-            argobj = self.load_configuration_file(argobj.cfgfile)
-        elif 'cfgjson' in argobj and argobj.cfgjson:
-            argobj = self.parse_json_configuration_str(argobj.cfgjson)
+        if 'cfgfile' in parseargs and parseargs.cfgfile:
+            argobj = self.load_configuration_file(parseargs.cfgfile)
+            argobj.logfile = parseargs.logfile
+        elif 'cfgjson' in parseargs and parseargs.cfgjson:
+            argobj = self.parse_json_configuration_str(parseargs.cfgjson)
+            argobj.logfile = parseargs.logfile
+        else:
+            return parseargs;
 
         return argobj

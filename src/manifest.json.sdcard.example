@@ -1,0 +1,7 @@
+{
+  "AppName": "example" ,
+  "AppVersion": "0.0.1" ,
+  "AppDescription": "Example mPower Application",
+  "AppVersionNotes":"First Version",
+  "PersistentStorage": true
+}

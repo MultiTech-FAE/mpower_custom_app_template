@@ -2,7 +2,5 @@
   "AppName": "example" ,
   "AppVersion": "0.0.1" ,
   "AppDescription": "Example mPower Application",
-  "AppVersionNotes":"First Version",
-  "SDCard": false
-  "PersistentStorage": true
+  "AppVersionNotes":"First Version"
 }
