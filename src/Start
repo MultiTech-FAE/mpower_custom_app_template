@@ -2,53 +2,41 @@
 #
 # Start
 #
-# Script used by the app-manager program to start and stop applications. 
+# Script invoked by the mPower `app-manager` program to start and stop
+# applications.
 #
-# This script is a fully cusomizable template that can be used to 
-# initialize the environment for executing the application and starting 
-# all processes. This script is part of the required mPower custom 
-# application framework to start and stop an application.
+# About:
+#  This script is a fully cusomizable template that can be used to 
+#  initialize the environment for executing the application and starting 
+#  all processes. Read the commented documentation and edit to suit.
 #
-# app-manager requires this script to accept the following command line
-# arguments:
+# Arguments:
+#  This script is invoked by the mPower `app-manger` application with 
+#  the following possible arguments:
 #
 #   start - start the application process(es)
 #   stop  - stop the application process(es)
 #   restart - restart the application process(es)
 #   reload - reload the application configuration (new config downloaded)
 #
-#  Script is invoked with the 'start' option on boot and when the 
-#  `app-manager` 'start' command is run. Script is invoked with the 
-#  'stop' option on shutdown and when the `app-manager` 'stop' command
-#  is run.
+# mPower Environment Variables:
+#  The mPower applicaiton `app-manager` ensures the following 
+#  environment variables are set when appropriate:
 #
-# MultiTech Provided Environment Variables:
-#    APP_DIR - installation directory of the application.
-#    CONFIG_DIR - Directory containing the configuration file.
+#    APP_DIR - Installation directory of the application (should always be set.)
+#    CONFIG_DIR - Directory containing the configuration file (depends on installation options.)
 #
 # Debugging Tips:
-#  - The `Start` file can be invoked manually from the command line using 
-#  the following:
+#  The `Start` file can be invoked manually from the command line using
+#  the following invocation:
 #
 #   `$ sudo APP_DIR=$(pwd) CONFIG_DIR=$(pwd)/config ./Start start`
 #
-#  - Enable verbose output during bash processing of the `Start` script 
-#  using:
+#  Enable verbose output during bash processing of the `Start` script 
+#  using by uncommenting the `set -x` command below.
 #
-#   `set -x`
-#
-#  - Log output from `Start` script to `/var/log/messages` by using the 
-#  `logger` command.
-#
-#   Logger Example:
-#    Line in Script:
-#     `logger "[${NAME}] DAEMON = ${DAEMON}"`
-#
-#    As appears in `/var/log/messages`:
-#     `-09T09:31:35.765713-05:00 mtcap3 root: [Example] DAEMON = /var/config/app/Example/example.exe`
-#
-#  - Write application to log to debug file on file system. 
-#     See commented 'DAEMON_DEBUG_ARGS' variable below for suggestion.
+#  Log details from the `Start` script to `/var/log/messages` by using
+#  the system `logger` command.
 #
 
 
@@ -81,17 +69,20 @@ NAME="example"
 #  Python3 - execute interpreter directly:
 #   DAEMON="python3 ${APP_DIR}/example.py"
 #
-#  Compiled Executable (C, C++, etc):
-#   DAEMON="${APP_DIR}/example"
+#  Python3 - execute interpreter indirectly (requires executable python script):
+#   DAEMON="${APP_DIR}/example.py"
 #
-DAEMON="${APP_DIR}/${NAME}"
+#  Compiled Executable (C, C++, etc):
+#   DAEMON="${APP_DIR}/example.exe"
+#
+DAEMON="${APP_DIR}/example.exe"
 
 #
 #DAEMON_DEBUG_ARGS
 #
-# Uncomment to pass optional arguments to daemon when debugging.
+# Pass optional arguments to daemon when debugging.
 #
-#DAEMON_DEBUG_ARGS="--logfile ${APP_DIR}/debug_log.txt"
+DAEMON_DEBUG_ARGS="--logfile /var/log/example_debug.log"
 
 #
 #DAEMON_ARGS
@@ -104,8 +95,10 @@ DAEMON_ARGS="--cfgfile ${CONFIG_DIR}/example.cfg.json ${DAEMON_DEBUG_ARGS}"
 # Variables - Edit if necessary.
 ################################
 
+#
 #START_STOP_DAEMON
-# mPower software responsible for starting/stopping the application.
+# System application responsible for starting/stopping the custom mPower
+# application. Default is Linux `start-stop-daemon`.
 #
 START_STOP_DAEMON="/usr/sbin/start-stop-daemon"
 
@@ -142,13 +135,15 @@ function ChangeUser {
 function ExecuteStart {
     echo "ExecuteStart:"
 
+# Use this invocation if Read/write access to OS files is required. 
+# Works with compiled executables and Python3 scripts.
     $START_STOP_DAEMON --start \
                        --background \
-                       --pidfile "${PID_FILE}" \
                        --make-pidfile \
+                       --pidfile "${PID_FILE}" \
                        --chdir "${RUN_DIR}" \
-                       --startas "${DAEMON}" \
-                       -- "${DAEMON_ARGS}"
+                       --startas "/bin/bash" \
+                       -- -c "exec ${DAEMON} ${DAEMON_ARGS}"
 }
 
 # Start the application running process(es)

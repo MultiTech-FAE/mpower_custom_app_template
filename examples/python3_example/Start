@@ -22,6 +22,7 @@
 # the environment for executing the application and starting all processes.  
 # This script is the supported framework to start and stop an application.
 
+set -x
 
 ################################
 # Variables - Edit to suit.
@@ -108,11 +109,11 @@ function ExecuteStart {
 
     $START_STOP_DAEMON --start \
                        --background \
-                       --pidfile "${PID_FILE}" \
                        --make-pidfile \
+                       --pidfile "${PID_FILE}" \
                        --chdir "${RUN_DIR}" \
-                       --startas "${DAEMON}" \
-                       -- "${DAEMON_ARGS}"
+                       --startas "/bin/bash" \
+                       -- -c "exec ${DAEMON} ${DAEMON_ARGS}"
 }
 
 # Start the application running process(es)

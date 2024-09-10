@@ -1,4 +1,8 @@
-# FILES
+# mPower Custom Application Framework
+
+The mPower custom application framework provides a highly flexible minimal framework for third-parties to run both python3 and compiled applications on mPower enabled MultiTech hardware.
+
+# Files
 
 ## manifest.json
 
@@ -18,3 +22,7 @@ JSON formatted file contains the following members:
 | PersistentStorage | Boolean | Optional variable. Can not be used with SDCard. Determines where app is installed and saved. A value of `true` uses persistent NVRAM that won't be overwritten by a factory default or firmware upgrade. A value of `false` uses non-persistent internal NVRAM which may be overwritten during factory reset and firmware upgrades. |
 
 Three example manifest.json files are provided. To use, copy desired manifest file to application and rename to `manifest.json`.
+
+## p_manifest.json
+
+Used when an mPower custom application requires the installation of dependencies using the installed opkg package manager.
