@@ -25,6 +25,7 @@
 
 set -x
 
+
 ########################################################################
 # Build Variables - Edit as required.
 ########################################################################
@@ -33,7 +34,7 @@ set -x
 #APP_NAME
 # Application name. Used to name the packaged tar.gz file.
 #
-APP_NAME="python3_example"
+APP_NAME="c_example"
 
 #
 #START_DIR
@@ -43,9 +44,9 @@ START_DIR=$(pwd)
 
 #
 #SRC_DIR
-# Location of application source files
+# Location of application source files.
 #
-SRC_DIR=$START_DIR
+SRC_DIR="${START_DIR}"
 
 #
 #SRC_CONFIG_DIR
@@ -57,7 +58,7 @@ SRC_CONFIG_DIR="${SRC_DIR}"
 #BUILD_DIR
 # Local build directory where files will be copied and archived.
 #
-BUILD_DIR="${SRC_DIR}/../build/python3_example/mpower_app"
+BUILD_DIR="${SRC_DIR}/../build/c_example/mpower_app"
 
 #
 #SRC_FILES
@@ -65,10 +66,7 @@ BUILD_DIR="${SRC_DIR}/../build/python3_example/mpower_app"
 # file(s).
 #
 SRC_FILES="\
-    ${SRC_DIR}/appargs.py \
-    ${SRC_DIR}/applogger.py \
-    ${SRC_DIR}/mpower_api.py \
-    ${SRC_DIR}/python3_example.py \
+    ${BUILD_DIR}/../c_example \
 "
 
 #
@@ -89,17 +87,6 @@ SRC_CONFIG_FILES="\
     ${SRC_CONFIG_DIR}/example.cfg.json \
     ${SRC_CONFIG_DIR}/EXAMPLE_CFG_README.md \
 "
-
-
-#
-#MPOWER_PROVISIONING_FILES
-# Optional space delimited list of mPower custom application 
-# provisioning files.
-#
-MPOWER_PROVISIONING_FILES="\
-    ${SRC_DIR}/p_manifest.json \
-"
-
 
 ########################################################################
 # Build Functions
@@ -145,7 +132,7 @@ build_provisioning() {
 # Prepare build directory.
 #
 rm -rf "${BUILD_DIR}/"
-mkdir -p "${BUILD_DIR}"                 || exit 1
+mkdir -p "${BUILD_DIR}" || exit 1
 
 #
 # Build Source
@@ -160,7 +147,7 @@ build_src
 # Uncomment if application uses configuration files that must persist
 # across mPower firmware updates.
 #
-build_config
+#build_config
 
 #
 # Build Provisioning

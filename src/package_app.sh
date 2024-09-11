@@ -44,7 +44,7 @@ START_DIR=$(pwd)
 
 #
 #SRC_DIR
-# Location of application source files
+# Location of application source files.
 #
 SRC_DIR=$START_DIR
 
