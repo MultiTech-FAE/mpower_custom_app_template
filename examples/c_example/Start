@@ -88,7 +88,7 @@ DAEMON="${APP_DIR}/c_example"
 #DAEMON_ARGS
 # Arguments supplied to the daemon.
 #
-#DAEMON_ARGS="--cfgfile ${CONFIG_DIR}/example.cfg.json ${DAEMON_DEBUG_ARGS}"
+DAEMON_ARGS="-c ${CONFIG_DIR}/example.cfg.json ${DAEMON_DEBUG_ARGS}"
 
 
 ################################

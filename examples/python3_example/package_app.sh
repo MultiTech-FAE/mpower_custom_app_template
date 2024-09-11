@@ -57,7 +57,7 @@ SRC_CONFIG_DIR="${SRC_DIR}"
 #BUILD_DIR
 # Local build directory where files will be copied and archived.
 #
-BUILD_DIR="${SRC_DIR}/../build/python3_example/mpower_app"
+BUILD_DIR="${SRC_DIR}/build/app"
 
 #
 #SRC_FILES

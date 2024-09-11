@@ -23,7 +23,7 @@
 #      "Build Provisioning" section.
 #
 
-set -x
+#set -x
 
 
 ########################################################################
@@ -55,10 +55,16 @@ SRC_DIR="${START_DIR}"
 SRC_CONFIG_DIR="${SRC_DIR}"
 
 #
-#BUILD_DIR
+#BUILD_DIR_APP
 # Local build directory where files will be copied and archived.
 #
-BUILD_DIR="${SRC_DIR}/../build/c_example/mpower_app"
+BUILD_DIR_APP="${SRC_DIR}/build/app"
+
+#
+#BUILD_DIR_APP
+# Local build directory where files will be copied and archived.
+#
+BUILD_DIR_SRC="${SRC_DIR}/build/src"
 
 #
 #SRC_FILES
@@ -66,7 +72,7 @@ BUILD_DIR="${SRC_DIR}/../build/c_example/mpower_app"
 # file(s).
 #
 SRC_FILES="\
-    ${BUILD_DIR}/../c_example \
+    ${BUILD_DIR_SRC}/c_example \
 "
 
 #
@@ -97,12 +103,12 @@ SRC_CONFIG_FILES="\
 #  Copy source and mandatory mPower application files to build dir.
 #
 build_src() {
-    cp ${SRC_FILES}        "${BUILD_DIR}/" || exit 1
-    cp ${MPOWER_APP_FILES} "${BUILD_DIR}/" || exit 1
-    
+    cp ${SRC_FILES}        "${BUILD_DIR_APP}/" || exit 1
+    cp ${MPOWER_APP_FILES} "${BUILD_DIR_APP}/" || exit 1
+
     # Mandatory `Install` and `Start` scripts must be executable.
-    chmod 755 "${BUILD_DIR}/Install" || exit 1
-    chmod 755 "${BUILD_DIR}/Start"   || exit 1
+    chmod 755 "${BUILD_DIR_APP}/Install" || exit 1
+    chmod 755 "${BUILD_DIR_APP}/Start"   || exit 1
 }
 
 #
@@ -110,8 +116,8 @@ build_src() {
 #  Copy optional application configuration files to build dir.
 #
 build_config() {
-    mkdir -p "${BUILD_DIR}/config/"               || exit 1
-    cp ${SRC_CONFIG_FILES} "${BUILD_DIR}/config/" || exit 1
+    mkdir -p "${BUILD_DIR_APP}/config/"               || exit 1
+    cp ${SRC_CONFIG_FILES} "${BUILD_DIR_APP}/config/" || exit 1
 }
 
 #
@@ -119,8 +125,8 @@ build_config() {
 #  Copy optional provisioning files to build dir.
 #  
 build_provisioning() {
-    mkdir -p "${BUILD_DIR}/provisioning/"                       || exit 1
-    cp ${MPOWER_PROVISIONING_FILES} "${BUILD_DIR}/provisioning" || exit 1
+    mkdir -p "${BUILD_DIR_APP}/provisioning/"                       || exit 1
+    cp ${MPOWER_PROVISIONING_FILES} "${BUILD_DIR_APP}/provisioning" || exit 1
 }
 
 
@@ -129,10 +135,16 @@ build_provisioning() {
 ########################################################################
 
 #
-# Prepare build directory.
+# Check for existence of built source.
 #
-rm -rf "${BUILD_DIR}/"
-mkdir -p "${BUILD_DIR}" || exit 1
+if [ ! -d "${BUILD_DIR_SRC}" ]; then
+    echo "Error: '${BUILD_DIR_SRC}' doesn't exist! Run ./build_app.sh first."
+    exit 1
+fi
+
+# Remove existing build dir if exists and create clean directory.
+rm -rf "${BUILD_DIR_APP}"
+mkdir -p "${BUILD_DIR_APP}" || exit 1
 
 #
 # Build Source
@@ -147,7 +159,7 @@ build_src
 # Uncomment if application uses configuration files that must persist
 # across mPower firmware updates.
 #
-#build_config
+build_config
 
 #
 # Build Provisioning
@@ -159,8 +171,8 @@ build_src
 #build_provisioning
 
 # Create the mPower custom application archive.
-cd ${BUILD_DIR}                  || exit 1
+cd ${BUILD_DIR_APP}              || exit 1
 tar -czvf "${APP_NAME}.tar.gz" * || exit 1
 cd ${START_DIR}                  || exit 1
 
-echo "Done. Packaged mPower custom application is in ${BUILD_DIR}/${APP_NAME}.tar.gz"
+echo "Done. Packaged mPower custom application is in ${BUILD_DIR_APP}/${APP_NAME}.tar.gz"

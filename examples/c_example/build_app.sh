@@ -3,8 +3,10 @@
 # build_app.sh
 #
 
+set -x
+
 SRC_DIR=$(pwd)
-BUILD_DIR="../build/c_example"
+BUILD_DIR="${SRC_DIR}/build/src"
 
 # Remove existing build dir if exists and create clean directory.
 rm -rf "${BUILD_DIR}"

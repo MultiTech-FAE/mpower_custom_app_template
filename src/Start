@@ -11,8 +11,8 @@
 #  all processes. Read the commented documentation and edit to suit.
 #
 # Arguments:
-#  This script is invoked by the mPower `app-manger` application with 
-#  the following possible arguments:
+#  The mPower `app-manger` application will invoke this script with the
+#  following possible arguments:
 #
 #   start - start the application process(es)
 #   stop  - stop the application process(es)
@@ -20,11 +20,14 @@
 #   reload - reload the application configuration (new config downloaded)
 #
 # mPower Environment Variables:
-#  The mPower applicaiton `app-manager` ensures the following 
+#  The mPower custom application framework ensures the following 
 #  environment variables are set when appropriate:
 #
-#    APP_DIR - Installation directory of the application (should always be set.)
-#    CONFIG_DIR - Directory containing the configuration file (depends on installation options.)
+#    APP_DIR - Installation directory of the application. Should always
+#              be set.
+#    CONFIG_DIR - Directory containing the configuration file. Existence
+#                 depends on whether the application was installed with 
+#                 a config directory or not.
 #
 # Debugging Tips:
 #  The `Start` file can be invoked manually from the command line using
