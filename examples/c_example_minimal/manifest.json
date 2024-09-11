@@ -1,0 +1,7 @@
+{
+  "AppName": "c_example",
+  "AppVersion": "0.0.1",
+  "AppDescription": "Example C Language mPower Application",
+  "AppVersionNotes":"First Version",
+  "PersistentStorage": true
+}

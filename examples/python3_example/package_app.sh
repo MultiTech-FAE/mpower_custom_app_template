@@ -96,6 +96,8 @@ SRC_CONFIG_FILES="\
 # Optional space delimited list of mPower custom application 
 # provisioning files.
 #
+# Note: Not used in this example.
+#
 MPOWER_PROVISIONING_FILES="\
     ${SRC_DIR}/p_manifest.json \
 "

@@ -34,7 +34,7 @@
 #APP_NAME
 # Application name. Used to name the packaged tar.gz file.
 #
-APP_NAME="c_example"
+APP_NAME="c_example_minimal"
 
 #
 #START_DIR
@@ -72,7 +72,7 @@ BUILD_DIR_SRC="${SRC_DIR}/build/src"
 # file(s).
 #
 SRC_FILES="\
-    ${BUILD_DIR_SRC}/c_example \
+    ${BUILD_DIR_SRC}/c_example_minimal \
 "
 
 #
@@ -88,6 +88,8 @@ MPOWER_APP_FILES="\
 #
 #SRC_CONFIG_FILES
 # Optional space delimited list of application configuration files.
+#
+# Note: Not used in this example.
 #
 SRC_CONFIG_FILES="\
     ${SRC_CONFIG_DIR}/example.cfg.json \
@@ -171,7 +173,7 @@ build_src
 # Uncomment if application uses configuration files that must persist
 # across mPower firmware updates.
 #
-build_config
+#build_config
 
 #
 # Build Provisioning

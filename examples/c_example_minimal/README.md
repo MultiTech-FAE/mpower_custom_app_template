@@ -1,4 +1,4 @@
-# c_example
+# c_example_minimal
 
 The C language mPower custom application example uses a cross compiler to compile source files to an executable that can be run on the target device. The executable and configuration files are then packaged into an mPower custom application archive.
 
@@ -11,5 +11,5 @@ The toolchain installation includes a shell script, usually beginning with `envi
 # Building
 
 1. Run the toolchain sepecific `environment-setup` script.
-2. Run the included `build_app.sh` script. Results will be in the `c_example/build/src` directory.
-3. Run the included `package_app.sh` script. Results will be in the `c_example/build/app` directory.
+2. Run the included `build_app.sh` script. Results will be in the `c_example_minimal/build/src` directory.
+3. Run the included `package_app.sh` script. Results will be in the `c_example_minimal/build/app` directory.
