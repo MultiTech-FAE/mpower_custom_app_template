@@ -145,7 +145,7 @@ build_provisioning() {
 # Prepare build directory.
 #
 rm -rf "${BUILD_DIR}/"
-mkdir -p "${BUILD_DIR}"                 || exit 1
+mkdir -p "${BUILD_DIR}/" || exit 1
 
 #
 # Build Source

@@ -23,7 +23,10 @@
 #      "Build Provisioning" section.
 #
 
-set -x
+#
+# Uncomment for verbose script output.
+#
+#set -x
 
 
 ########################################################################
@@ -131,7 +134,7 @@ build_config() {
 #  
 build_provisioning() {
     mkdir -p "${BUILD_DIR}/provisioning/"                       || exit 1
-    cp ${MPOWER_PROVISIONING_FILES} "${BUILD_DIR}/provisioning" || exit 1
+    cp ${MPOWER_PROVISIONING_FILES} "${BUILD_DIR}/provisioning/" || exit 1
 }
 
 
@@ -143,7 +146,7 @@ build_provisioning() {
 # Prepare build directory.
 #
 rm -rf "${BUILD_DIR}/"
-mkdir -p "${BUILD_DIR}"                 || exit 1
+mkdir -p "${BUILD_DIR}/" || exit 1
 
 #
 # Build Source
