@@ -7,20 +7,23 @@
 #  install.
 #
 #  Instructions:
-#   1. Populate the SRC_FILES variable with the mPower custom 
-#      application source and/or executable file(s). Required files are
-#      already populated in the  MPOWER_APP_FILES variable and should 
-#      not be included in SRC_FILES.
+#   1. If the mPower application uses source and/or executable file(s) 
+#      then populate the SRC_FILES variable and uncomment lines in the 
+#      "Package Source" section.
+#
+#      Note: Required mPower custom application framework files are 
+#      already populated in the MPOWER_APP_FILES variable and should not
+#      be included in SRC_FILES.
 #
 #   2. If the mPower custom application uses configuration files that 
 #      must persist across mPower firmware updates then populate the
 #      SRC_CONFIG_FILES variable and uncomment lines in the 
-#      "Build Config" section.
+#      "Package Config" section.
 #
 #   3. If the mPower custom application requires provisioning and 
 #      installation of additional packages then populate the 
-#      MPOWER_PROVISIONING_FILES variable and uncomment lines in the 
-#      "Build Provisioning" section.
+#      MPOWER_APP_PROVISIONING_FILES variable and uncomment lines in the 
+#      "Package Provisioning" section.
 #
 
 #
@@ -58,19 +61,16 @@ SRC_DIR=$START_DIR
 SRC_CONFIG_DIR="${SRC_DIR}"
 
 #
+#SRC_PROVISIONING_DIR
+# Local source provisioning directory. Change if not ${SRC_DIR}.
+#
+SRC_PROVISIONING_DIR="${SRC_DIR}"
+
+#
 #BUILD_DIR
 # Local build directory where files will be copied and archived.
 #
 BUILD_DIR="${SRC_DIR}/build/app"
-
-#
-#SRC_FILES
-# Required space delimited list of application source and/or executable
-# file(s).
-#
-SRC_FILES="\
-    ${SRC_DIR}/example.py \
-"
 
 #
 #MPOWER_APP_FILES
@@ -83,6 +83,25 @@ MPOWER_APP_FILES="\
 "
 
 #
+#MPOWER_APP_PROVISIONING_FILES
+# Optional space delimited list of mPower custom application 
+# provisioning files.
+#
+MPOWER_APP_PROVISIONING_FILES="\
+    ${SRC_PROVISIONING_DIR}/p_manifest.json \
+    ${SRC_PROVISIONING_DIR}/example_dependency.ipk \
+"
+
+#
+#SRC_FILES
+# Optional space delimited list of application source and/or executable
+# file(s).
+#
+SRC_FILES="\
+    ${SRC_DIR}/example.py \
+"
+
+#
 #SRC_CONFIG_FILES
 # Optional space delimited list of application configuration files.
 #
@@ -92,26 +111,15 @@ SRC_CONFIG_FILES="\
 "
 
 
-#
-#MPOWER_PROVISIONING_FILES
-# Optional space delimited list of mPower custom application 
-# provisioning files.
-#
-MPOWER_PROVISIONING_FILES="\
-    ${SRC_DIR}/p_manifest.json \
-"
-
-
 ########################################################################
 # Build Functions
 ########################################################################
 
 #
-# build_src()
-#  Copy source and mandatory mPower application files to build dir.
+# build_mpower_app()
+#  Copy mandatory mPower application files to build dir.
 #
-build_src() {
-    cp ${SRC_FILES}        "${BUILD_DIR}/" || exit 1
+build_mpower_app() {
     cp ${MPOWER_APP_FILES} "${BUILD_DIR}/" || exit 1
     
     # Mandatory `Install` and `Start` scripts must be executable.
@@ -120,21 +128,29 @@ build_src() {
 }
 
 #
-# build_config()
+# package_src()
+#  Copy source mPower application files to build dir.
+#
+package_src() {
+    cp ${SRC_FILES} "${BUILD_DIR}/" || exit 1
+}
+
+#
+# package_config()
 #  Copy optional application configuration files to build dir.
 #
-build_config() {
+package_config() {
     mkdir -p "${BUILD_DIR}/config/"               || exit 1
     cp ${SRC_CONFIG_FILES} "${BUILD_DIR}/config/" || exit 1
 }
 
 #
-# build_provisioning()
+# package_provisioning()
 #  Copy optional provisioning files to build dir.
 #  
-build_provisioning() {
+package_provisioning() {
     mkdir -p "${BUILD_DIR}/provisioning/"                       || exit 1
-    cp ${MPOWER_PROVISIONING_FILES} "${BUILD_DIR}/provisioning/" || exit 1
+    cp ${MPOWER_APP_PROVISIONING_FILES} "${BUILD_DIR}/provisioning/" || exit 1
 }
 
 
@@ -149,28 +165,36 @@ rm -rf "${BUILD_DIR}/"
 mkdir -p "${BUILD_DIR}/" || exit 1
 
 #
-# Build Source
-#  Copy source and mandatory mPower application files to build dir.
+# Build mPower Application
+#  Copy mandatory mPower application files to build dir. Required.
 #
-build_src
+build_mpower_app
 
 #
-# Build Config
+# Package Source
+#  Copy source mPower application files to build dir.
+#
+# Uncomment if application uses source and/or executable files.
+#
+#package_src
+
+#
+# Package Config
 #  Copy optional application configuration files to build dir.
 #
 # Uncomment if application uses configuration files that must persist
 # across mPower firmware updates.
 #
-#build_config
+#package_config
 
 #
-# Build Provisioning
+# Package Provisioning
 #  Copy optional provisioning files to build dir.
 #
 # Uncomment if application requires provisioning and installation of
 # additional packages.
 #
-#build_provisioning
+#package_provisioning
 
 # Create the mPower custom application archive.
 cd ${BUILD_DIR}                  || exit 1
