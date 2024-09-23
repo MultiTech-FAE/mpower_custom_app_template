@@ -6,4 +6,4 @@ To package run:
 
 `$ ./package_app.sh`
 
-Packaged application will be in `./build/python3_example.tar.gz`
+Packaged application will be in `./build/app/python3_example.tar.gz`

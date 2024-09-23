@@ -34,7 +34,7 @@ import logging.handlers
 ########################################################################
 
 # Format string. Edit to change appearance in log.
-APPLOGGER_FORMAT_STRING = '%(levelname)s:%(name)s:%(message)s'
+APPLOGGER_FORMAT_STRING = '%(asctime)s %(name)s [%(levelname)s] %(message)s'
 
 ########################################################################
 # Globals - Do not edit.
@@ -54,25 +54,36 @@ APPLOGGER_HANDLE = None
 # Functions
 ########################################################################
 
-def init(handle = APPLOGGER_HANDLE_DEFAULT, max_level = APPLOGGER_DEFAULT_MAX_LEVEL):
+def init(handle = APPLOGGER_HANDLE_DEFAULT, max_level = APPLOGGER_DEFAULT_MAX_LEVEL, format_string = APPLOGGER_FORMAT_STRING):
     global APPLOGGER_HANDLE
 
     if APPLOGGER_HANDLE:
         raise Exception("Application logger already initialized.")
 
     #Set up logger root.
-    logging.basicConfig(level = max_level)
-
-    #Set up application logger.
-    logger = logging.getLogger(handle)
-    hndlr  = logging.handlers.SysLogHandler(address='/dev/log')
-    fmtr   = logging.Formatter(APPLOGGER_FORMAT_STRING)
-
-    hndlr.setFormatter(fmtr)
-    logger.addHandler(hndlr)
-
+    logging.basicConfig(format = format_string, level = max_level)
     APPLOGGER_HANDLE = handle
 
+def use_syslog():
+    if APPLOGGER_HANDLE:
+        logger = logging.getLogger(APPLOGGER_HANDLE)
+        hndlr  = logging.handlers.SysLogHandler(address='/dev/log')
+        fmtr   = logging.Formatter(APPLOGGER_FORMAT_STRING)
+
+        hndlr.setFormatter(fmtr)
+        logger.addHandler(hndlr)
+
+def use_log_file(fname):
+    '''Attempts to log to file in addition to syslog.'''
+    if APPLOGGER_HANDLE:
+        logger = logging.getLogger(APPLOGGER_HANDLE)
+        hndlr  = logging.FileHandler(fname)
+        fmtr   = logging.Formatter(APPLOGGER_FORMAT_STRING)
+
+        hndlr.setFormatter(fmtr)
+        logger.addHandler(hndlr)
+    else:
+        raise Exception("Application logger is not initialized. Use applogger.init() first.")        
 
 def get_logger():
     if APPLOGGER_HANDLE:

@@ -34,10 +34,6 @@ if __name__ == '__main__':
     #Get command line arguments.
     args = AppArgs(APP_DESCRIPTION).parse_args()
 
-    if 'logfile' in args.__dict__:
-        logger.info(f'Logging to {args.logfile}')
-        applogger.use_log_file(args.logfile)
-
     #Get device serial number.
     serialno = get_device_serial_number()
     if not serialno:
@@ -46,8 +42,8 @@ if __name__ == '__main__':
     # Write to logs.
     logger.info(f'Device Serial Number: {serialno}')
 
-    for key,value in args.__dict__.items():
-        logger.info(f'Argument "{key}" = "{value}"')
+    for key in args:
+        logger.info(f'Argument "{key}" = "{args[key]}"')
 
     #End.
     logger.info("python3 example application end.")
