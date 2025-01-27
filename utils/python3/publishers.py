@@ -80,19 +80,21 @@ class MQTTClient(mqtt.Client):
     def publish_message(self, message, topic):
         self.publish(topic, message)
 
-    def publish_dictionary(self, dictionary, topic):
-        '''Recurses through dictionary items using key as the topic level.'''
+    def publish_iterable(self, iterable, topic):
+        '''Recurses through dictionary and list items using key and index as the topic level respectively.'''
+        def _publish_recursive(cur_topic, cur_value):
+            if isinstance(cur_value, dict):
+                for key, value in cur_value.items():
+                    new_topic = cur_topic + '/' + key
+                    _publish_recursive(new_topic, value)
+            elif isinstance(cur_value, list):
+                for idx, value in enumerate(cur_value):
+                    new_topic = cur_topic + '/' + str(idx)
+                    _publish_recursive(new_topic, value)
+            else:
+                self.publish(cur_topic, cur_value)
 
-        def _publish_dictionary_recursive(cur_topic, cur_dict):
-            for key, value in cur_dict.items():
-                new_topic = cur_topic + '/' + key
-                if isinstance(value, dict):
-                    _publish_dictionary_recursive(new_topic, value)
-                else:
-                    self.publish(new_topic, value)
-
-        #Recursive function traverses nested dictionaries and publishes items.
-        _publish_dictionary_recursive(topic, dictionary)
+        _publish_recursive(topic, iterable)
 
     ################################################
     # MQTT Callback Functions
