@@ -1,8 +1,9 @@
 # mPower Custom Application - Bash Shell Script Example
 
-This document shows how to build a minimal mPower custom application that executes a bash script.
+This document shows how to build a minimal mPower custom application that executes a bash script named `BashExample.sh`.
 
 **_Note:_** This document assumes that the `mpower_custom_app_template` repo has been cloned into `~/`
+**_Note:_** All text files must use the Unix (LF) line ending convention.
 
 ## Create Application Source Directory
 
@@ -96,7 +97,34 @@ DAEMON_ARGS="${DAEMON_DEBUG_ARGS}"
 
 Save and close `Start`.
 
-Bash script example gets device serial number using the mPower HTTP API, and writes output to /var/log/messages.
+## BashExample.sh
+
+Open a new file in a text editor.
+
+```
+$ kate BashExample.sh &
+```
+
+Put the following text in the file:
+
+```
+#!/bin/bash
+#
+# BashExample.sh - Get device serial number, log, and quit application.
+#
+
+set -x
+
+#Use mPower API to get device serial number (AKA deviceID)
+DEVICE_ID=$(wget -qO- --no-check-certificate https://127.0.0.1/api/system/deviceId)
+
+#Log result to /var/log/messages
+logger -t BashExample $DEVICE_ID
+```
+
+Save and close `BashExample.sh`.
+
+Bash script example gets device serial number using the mPower HTTP API, and writes output to `/var/log/messages`.
 
 
 To package run:
