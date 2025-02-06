@@ -152,7 +152,7 @@ Create the gzipped tarball `BashExampleApp_0_0_1.tgz`:
 6. Write "BashExampleApp" in the "App Name" field.
 7. Click the file chooser icon and select the `BashExampleApp_0_0_1.tgz` file. Application will install and run.
 
-# Read  Custom mPower Application Application Output
+# Confirm Application Output
 
 1. Navigate to "Administration->Access Configuration".
 2. Click the "Enable" checkbox in the "SSH Settings" section and configure as desired.
