@@ -57,8 +57,8 @@ Edit `manifest.json` to read:
   "AppName": "BashExampleApp",
   "AppVersion": "0.0.1",
   "AppDescription": "Example mPower application runs a Bash script",
-  "AppVersionNotes":"First Version",
-  "PersistentStorage":true
+  "AppVersionNotes": "First Version",
+  "PersistentStorage": true
 }
 ```
 
