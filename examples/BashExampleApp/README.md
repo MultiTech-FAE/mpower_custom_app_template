@@ -104,7 +104,7 @@ Save and close `Start`.
 
 # Bash Example 
 
-Create a bash script for the example that will use the mPower API to get the device's serial number (AKA deviceID) and log it to `/var/log/messages`.
+Create a bash script for the example that will use the mPower API to get the LoRa device list from installed LoRa network server and write it to a timestamped file.
 
 ## BashExampleApp.sh
 
