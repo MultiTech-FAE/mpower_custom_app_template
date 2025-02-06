@@ -179,7 +179,7 @@ build_src
 
 # Create the mPower custom application archive.
 cd ${BUILD_DIR}                  || exit 1
-tar -czvf "${APP_NAME}.tar.gz" * || exit 1
+tar --hard-dereference -hczf "${APP_NAME}.tgz" * || exit 1
 cd ${START_DIR}                  || exit 1
 
 echo "Done. Packaged mPower custom application is in ${BUILD_DIR}/${APP_NAME}.tar.gz"
