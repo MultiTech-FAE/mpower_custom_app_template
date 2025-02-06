@@ -3,7 +3,9 @@
 This document shows how to build a minimal mPower custom application which executes a bash script named `BashExampleApp.sh`.
 
 **_Note:_** This document assumes that the `mpower_custom_app_template` repo has been cloned into `~/`
+
 **_Note:_** All text files must use the Unix (LF) line ending convention.
+
 **_Note:_** This example uses `kate` as the text editor. Most text editors will suffice.
 
 ## Create Application Source Directory
