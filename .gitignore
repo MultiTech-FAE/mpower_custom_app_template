@@ -1,6 +1,10 @@
 # Folders named dev are ignored.
 dev/
 
+# Compressed archives are ignored.
+*.tar.gz
+*.tgz
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

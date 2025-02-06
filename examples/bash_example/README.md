@@ -1,9 +1,10 @@
 # mPower Custom Application - Bash Shell Script Example
 
-This document shows how to build a minimal mPower custom application which executes a bash script named `BashExampleApp.sh` which uses the mPower API to get the device's serial number (AKA deviceID) and logs it to `/var/log/messages`.
+This document shows how to build a minimal mPower custom application which executes a bash script named `BashExampleApp.sh`.
 
 **_Note:_** This document assumes that the `mpower_custom_app_template` repo has been cloned into `~/`
 **_Note:_** All text files must use the Unix (LF) line ending convention.
+**_Note:_** This example uses `kate` as the text editor. Most text editors will suffice.
 
 ## Create Application Source Directory
 
@@ -116,16 +117,16 @@ Put the following text in the file:
 ```
 #!/bin/bash
 #
-# BashExampleApp.sh - Get device serial number, log, and quit application.
+# BashExampleApp.sh - Get LoRa device list from installed LoRa network server.
 #
 
-set -x
+#set -x
 
-#Use mPower API to get device serial number (AKA deviceID)
-DEVICE_ID=$(wget -qO- --no-check-certificate https://127.0.0.1/api/system/deviceId)
+DEVICE_LIST=$(lora-query -x device list)
 
-#Log result to /var/log/messages
-logger -t BashExampleApp $DEVICE_ID
+printf -v DATE_TIME_NOW '%(%F_%T)T.%06.0f' ${EPOCHREALTIME/./ }
+
+echo -ne "${DEVICE_LIST}" > "./${DATE_TIME_NOW}-lora_device_list.txt"
 ```
 
 Save and close `BashExampleApp.sh`.
@@ -147,8 +148,17 @@ Create the gzipped tarball `BashExampleApp_0_0_1.tgz`:
 5. Write a random seven digit positive integer in the "App ID" field.
 6. Write "BashExampleApp" in the "App Name" field.
 7. Click the file chooser icon and select the `BashExampleApp_0_0_1.tgz` file. Application will install and run.
-8. Navigate to "Status & Logs->Statistics"
-9. Click the "show" link in "System Log"
-10. Look for a line in the log similar to the following to confirm that the application has been run:
-`2021-09-18T16:38:12.579134+00:00 mtcap3 BashExampleApp: { "code" : 200, "result" : "22806384", "status" : "success" }`
 
+# Read  Custom mPower Application Application Output
+
+1. Navigate to "Administration->Access Configuration".
+2. Click the "Enable" checkbox in the "SSH Settings" section and configure as desired.
+3. SSH into the device.
+4. Change into the installation directory and list timestamped file. 
+
+Example:
+```
+$ cd /var/persistent/BashExampleApp
+$ ls *.txt
+2021-09-18:17:55:43.893755-lora_device_list.txt
+```
