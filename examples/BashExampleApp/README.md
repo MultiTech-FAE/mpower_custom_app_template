@@ -77,7 +77,7 @@ The base `Install` script will not need to be edited in this example.
 
 ## Start
 
-The `Start` file is a shell script which is executed by the MultiTech mPower enabled device when the application is started. The `Start` script is responsible for FIXME.
+The `Start` file is a shell script which is executed by the MultiTech mPower enabled device when the application is started. The `Start` script is responsible for starting and stopping the application.
 
 Copy the base `Start` script provided by the mPower Custom App Template repository to the application source directory.
 
