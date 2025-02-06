@@ -1,6 +1,6 @@
 # mPower Custom Application - Bash Shell Script Example
 
-This document shows how to build a minimal mPower custom application that executes a bash script named `BashExample.sh`.
+This document shows how to build a minimal mPower custom application which executes a bash script named `BashExampleApp.sh` which uses the mPower API to get the device's serial number (AKA deviceID) and logs it to `/var/log/messages`.
 
 **_Note:_** This document assumes that the `mpower_custom_app_template` repo has been cloned into `~/`
 **_Note:_** All text files must use the Unix (LF) line ending convention.
@@ -10,13 +10,15 @@ This document shows how to build a minimal mPower custom application that execut
 Make a directory for the source code of the application and change into it.
 
 ```
-$ mkdir -p bash_example/src
-$ cd bash_example/src
+$ mkdir -p BashExampleApp/src
+$ cd BashExampleApp/src
 ```
 
 # Required Files
 
-Next will be copying and editing the three minimum required files in an mPower custom application - `manifest.json`, `Install`, and `Start`.
+There are a minimum of three required files in an mPower custom application - `manifest.json`, `Install`, and `Start`. 
+
+Follows are instructions on how to copy and edit provided template files for use in the BashExampleApp application.
 
 ## manifest.json
 
@@ -49,7 +51,7 @@ Edit `manifest.json` to read:
 
 ```
 {
-  "AppName": "BashExample",
+  "AppName": "BashExampleApp",
   "AppVersion": "0.0.1",
   "AppDescription": "Example mPower application runs a Bash script",
   "AppVersionNotes":"First Version"
@@ -68,7 +70,7 @@ Copy the base `Install` script provided by the mPower Custom App Template reposi
 $ cp ~/mpower_custom_app_template/src/Install .
 ```
 
-The base `Install` script will not need to be edited for this application.
+The base `Install` script will not need to be edited in this example.
 
 ## Start
 
@@ -89,20 +91,24 @@ $ kate Start &
 Edit the variable values to the provided values in the `Start` script:
 
 ```
-NAME="BashExample"
-DAEMON="${APP_DIR}/BashExample.sh"
+NAME="BashExampleApp"
+DAEMON="${APP_DIR}/BashExampleApp.sh"
 DAEMON_DEBUG_ARGS=""
 DAEMON_ARGS="${DAEMON_DEBUG_ARGS}"
 ```
 
 Save and close `Start`.
 
-## BashExample.sh
+# Bash Example 
 
-Open a new file in a text editor.
+Create a bash script for the example that will use the mPower API to get the device's serial number (AKA deviceID) and log it to `/var/log/messages`.
+
+## BashExampleApp.sh
+
+Open a new file in a text editor named `BashExampleApp.sh`.
 
 ```
-$ kate BashExample.sh &
+$ kate BashExampleApp.sh &
 ```
 
 Put the following text in the file:
@@ -110,7 +116,7 @@ Put the following text in the file:
 ```
 #!/bin/bash
 #
-# BashExample.sh - Get device serial number, log, and quit application.
+# BashExampleApp.sh - Get device serial number, log, and quit application.
 #
 
 set -x
@@ -119,16 +125,30 @@ set -x
 DEVICE_ID=$(wget -qO- --no-check-certificate https://127.0.0.1/api/system/deviceId)
 
 #Log result to /var/log/messages
-logger -t BashExample $DEVICE_ID
+logger -t BashExampleApp $DEVICE_ID
 ```
 
-Save and close `BashExample.sh`.
+Save and close `BashExampleApp.sh`.
 
-Bash script example gets device serial number using the mPower HTTP API, and writes output to `/var/log/messages`.
+# Package Custom mPower Application
 
+mPower requires the custom application to be packaged as a gzipped tarball.
 
-To package run:
+Create the gzipped tarball `BashExampleApp_0_0_1.tgz`:
 
-`$ ./package_app.sh`
+`tar --hard-dereference -hczf BashExampleApp_0_0_1.tgz manifest.json Install Start BashExampleApp.sh`
 
-Packaged application will be in `./build/app/bash_example.tar.gz`
+# Install Custom mPower Application
+
+1. Log into mPower enabled MultiTech device. 
+2. Navigate to "Apps".
+3. Click "Enabled" checkbox.
+4. Click "Add Custom App".
+5. Write a random seven digit positive integer in the "App ID" field.
+6. Write "BashExampleApp" in the "App Name" field.
+7. Click the file chooser icon and select the `BashExampleApp_0_0_1.tgz` file. Application will install and run.
+8. Navigate to "Status & Logs->Statistics"
+9. Click the "show" link in "System Log"
+10. Look for a line in the log similar to the following to confirm that the application has been run:
+`2021-09-18T16:38:12.579134+00:00 mtcap3 BashExampleApp: { "code" : 200, "result" : "22806384", "status" : "success" }`
+
