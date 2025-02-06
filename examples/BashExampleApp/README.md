@@ -42,7 +42,7 @@ $ kate manifest.json &
 The `manifest.json` file is a JSON formatted file contains the following members:
 
 | Key               | Type    | Description |
-| :---------------- | :-----: | ----------: |
+| :---------------- | :-----: | :---------- |
 | AppName           | String  | Name of the application. This is used for the installed app directory name and displaying in the UI and on DeviceHQ |
 | AppVersion        | String  | Version of the application. DeviceHQ uses this to distinguish between versions |
 | AppDescription    | String  | Description for your purposes |
