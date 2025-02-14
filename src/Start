@@ -36,7 +36,7 @@
 #   `$ sudo APP_DIR=$(pwd) CONFIG_DIR=$(pwd)/config ./Start start`
 #
 #  Enable verbose output during bash processing of the `Start` script 
-#  using by uncommenting the `set -x` command below.
+#  by uncommenting the `set -x` command below.
 #
 #  Log details from the `Start` script to `/var/log/messages` by using
 #  the system `logger` command.

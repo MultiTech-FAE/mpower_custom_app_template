@@ -13,7 +13,7 @@
 #include <stdlib.h>
 
 //Logger identification.
-#define LOG_IDENT "c_example"
+#define LOG_IDENT "CExampleAppLog"
 
 //Maximum length of a configuration file path.
 #define BUF_LEN 255

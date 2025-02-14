@@ -21,7 +21,7 @@ $ cd BashExampleApp/src
 
 There are a minimum of three required files in an mPower custom application - `manifest.json`, `Install`, and `Start`. 
 
-Follows are instructions on how to copy and edit provided template files for use in the BashExampleApp application.
+Instructions on how to copy and edit provided template files for use in the BashExampleApp application follow.
 
 ## manifest.json
 
