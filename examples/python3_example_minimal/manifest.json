@@ -1,7 +1,0 @@
-{
-  "AppName": "PacketAnalyzer" ,
-  "AppVersion": "1.0" ,
-  "AppDescription": "Packet Analyzer - monitors network traffic",
-  "AppVersionNotes":"First Version",
-  "SDCard": false
-}

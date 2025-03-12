@@ -1,7 +1,0 @@
-{
-  "AppName": "Python3Example",
-  "AppVersion": "1.0",
-  "AppDescription": "Python3 mPower custom application example",
-  "AppVersionNotes":"First release.",
-  "PersistentStorage": true
-}
